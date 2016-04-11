@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blogengine',
     'taggit',
+    'rest_framework',
 ]
 
 MIDDLEWARE_CLASSES = [
