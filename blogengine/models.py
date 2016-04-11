@@ -1,11 +1,17 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
 from taggit.managers import TaggableManager
 
 # Create your models here.
+class User(AbstractUser):
+    followers = models.ManyToManyField('self', related_name='followees', symmetrical=False)
+    
+    def __unicode__(self):
+        return self.username
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
@@ -53,3 +59,6 @@ class Story(models.Model):
         verbose_name_plural = 'stories'
         ordering = ["-pub_date"]
 
+class Photo(models.Model):
+    story = models.ForeignKey(Story, related_name='photos')
+    image = models.ImageField(upload_to="%Y/%m/%d")

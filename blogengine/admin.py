@@ -11,5 +11,6 @@ class StoryAdmin(admin.ModelAdmin):
         obj.author = request.user
         obj.save()
 
+admin.site.register(models.User)
 admin.site.register(models.Category)
 admin.site.register(models.Story,StoryAdmin)
