@@ -2,6 +2,7 @@ from rest_framework import viewsets, permissions, renderers
 
 from blogengine.models import User, Story, Photo
 from blogengine.serializers import UserSerializer, StorySerializer, PhotoSerializer
+from blogengine.permissions import IsOwnerOrReadOnly
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -17,5 +18,9 @@ class StoryViewSet(viewsets.ModelViewSet):
     """
     queryset = Story.objects.all()
     serializer_class = StorySerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
+                          
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
     
     
