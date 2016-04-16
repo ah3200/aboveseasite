@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blogengine',
     'taggit',
     'rest_framework',
+    'taggit_serializer',
 ]
 
 MIDDLEWARE_CLASSES = [

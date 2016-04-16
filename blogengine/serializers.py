@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
 from blogengine.models import User, Story, Photo
+from taggit_serializer.serializers import (TagListSerializerField, TaggitSerializer)
+
 
 class UserSerializer(serializers.ModelSerializer):
 #    stories = serializers.HyperlinkedIdentityField(view_name='userstory-list', lookup_field='username')
@@ -8,10 +10,11 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        field = ('id','username','email','first_name','last_name','stories')
+        fields = ('id','username','email','first_name','last_name','stories')
         
-class StorySerializer(serializers.ModelSerializer):
-    authoer = UserSerializer(required=False)
+class StorySerializer(TaggitSerializer, serializers.ModelSerializer):
+    author = UserSerializer(required=False)
+    tags = TagListSerializerField()
     
     class Meta:
         model = Story

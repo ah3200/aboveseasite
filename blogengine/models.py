@@ -44,7 +44,7 @@ class Story(models.Model):
     pub_date = models.DateTimeField()
     text = models.TextField()
     slug = models.SlugField(max_length=40,unique=True)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, related_name='stories')
     pub_status = models.CharField(max_length=1,choices=STATUS_CHOICES,default=DRAFT)
     category = models.ForeignKey(Category,blank=True,null=True)
     tags = TaggableManager()
