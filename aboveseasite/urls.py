@@ -20,4 +20,5 @@ from blogengine.urls import router
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
+    url(r'^auth/', include('rest_framework_social_oauth2.urls')),
 ]
