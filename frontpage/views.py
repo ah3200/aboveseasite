@@ -5,4 +5,4 @@ from django.template import RequestContext
 # Create your views here.
 def home(request):
     context = {}
-    return render_to_response('frontpage/base.html', context, context_instance=RequestContext(request))
+    return render_to_response('frontpage/story_list.html', context, context_instance=RequestContext(request))

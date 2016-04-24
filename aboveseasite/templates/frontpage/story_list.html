@@ -1,0 +1,25 @@
+{% extends "frontpage/base.html" %}{% load staticfiles %}
+
+    {% block content %}
+        {% verbatim %}
+        <div class="panel" ng-repeat="story in stories">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">{{ story.title }}</h3>
+                    <author class="pull-right">{{ story.author.username }}</author>
+                        </div>
+                    <p class="well">{{ story.text }}</p>
+            </div>
+        {% endverbatim %}
+                        
+        <script>
+            var app = angular.module('myApp', []);
+            app.controller('myCtrl', function($scope, $http) {
+                $scope.test = "I am done";
+                $http.get('/api/stories')
+                    .then(function(response) {
+                        $scope.stories = response.data;
+                        console.log(response.data);
+                    });
+            });
+        </script>
+     {% endblock %}
