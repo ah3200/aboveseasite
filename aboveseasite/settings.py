@@ -41,9 +41,14 @@ INSTALLED_APPS = [
     'taggit',
     'rest_framework',
     'taggit_serializer',
-    'oauth2_provider',
-    'social.apps.django_app.default',
-    'rest_framework_social_oauth2',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+#    'oauth2_provider',
+#    'social.apps.django_app.default',
+#    'rest_framework_social_oauth2',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -70,8 +75,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect',
+#                "django.contrib.auth.context_processors.auth",
+#                "allauth.account.context_processors.account",
+#                "allauth.socialaccount.context_processors.socialaccount",
+#                'social.apps.django_app.context_processors.backends',
+#                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -129,24 +137,37 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR+'/static/'
 
-AUTH_USER_MODEL = 'blogengine.User'
+#AUTH_USER_MODEL = 'blogengine.User'
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
-        'rest_framework_social_oauth2.authentication.SocialAuthentication',
-    ),
-}
+SITE_ID = 1
+
+#REST_FRAMEWORK = {
+#    'DEFAULT_AUTHENTICATION_CLASSES': (
+#        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+#        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+#    ),
+#}
 
 AUTHENTICATION_BACKENDS = (
-   'social.backends.facebook.FacebookAppOAuth2',
-   'social.backends.facebook.FacebookOAuth2',
-   'social.backends.google.GoogleOAuth2',
-   'social.backends.twitter.TwitterOAuth',
-   'social.backends.instagram.InstagramOAuth2',
-   'rest_framework_social_oauth2.backends.DjangoOAuth2',
-   'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+#   'social.backends.facebook.FacebookAppOAuth2',
+#   'social.backends.facebook.FacebookOAuth2',
+#   'social.backends.google.GoogleOAuth2',
+#   'social.backends.twitter.TwitterOAuth',
+#   'social.backends.instagram.InstagramOAuth2',
+#   'rest_framework_social_oauth2.backends.DjangoOAuth2',
+#   'django.contrib.auth.backends.ModelBackend',
 )
+
+SOCIALACCOUNT_PROVIDERS = \
+    {'facebook':
+       {'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', 'user_friends'],
+        'AUTH_PARAMS': {},
+        'VERSION': 'v2.6',
+        }
+    }
 
 import json
 with open('secret.json') as f:

@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load socialaccount %}
+
 <!doctype html>
 <html class="no-js" lang="">
     <head>
@@ -39,16 +41,9 @@
                     </form>
                 </li>
                 <li><a href="/story/new/" class="waves-effect waves-light btn">Write a story</a></li>
-                {% if user and not user.is_anonymous %}
-                <li>
-                    <a>Hello {{ user.get_full_name|default:user.username }}!</a>
-                </li>
-                <li>
-                    <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
-                    </li>
-                {% else %}
-                <li><a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}" class="waves-effect waves-light btn">Login with Facebook</a></li>
-                {% endif %}
+               
+                <li><a href="{% provider_login_url "facebook" method="oauth2" %}" class="waves-effect waves-light btn">Login with Facebook</a></liv>
+               
               </ul>
               <ul class="right hide-on-med-and-down">
                 <li><a href="#">Staff Picks</a></li>
